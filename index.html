@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06141B">
+<meta name="color-scheme" content="dark">
+<title>CareNova - Trusted care at home for Sri Lankan families</title>
+<meta name="description" content="CareNova helps Sri Lankan families find, book and pay a trusted helper for an elderly or ill relative, matched to their condition. In Sinhala, Tamil and English.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23253745'/%3E%3Cg transform='translate(10,8) scale(.8)'%3E%3Cpath d='M24 46 V82 H76 V46' fill='none' stroke='%23CCD0CF' stroke-width='9' stroke-linecap='round' stroke-linejoin='round' opacity='.6'/%3E%3Cpath d='M14 50 L50 18 L86 50' fill='none' stroke='%23E4E7E6' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M50 82 C30 70 16 57 16 41 C16 30 24 22 34 22 C41 22 47 26 50 32 C53 26 59 22 66 22 C76 22 84 30 84 41 C84 57 70 70 50 82Z' transform='translate(29,44) scale(.42)' fill='%231F9CF0'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@500;700&family=Noto+Sans+Tamil:wght@500;700&display=swap">
+<style>
+/* ===========================================================
+   CareNova landing page - "Liquid glass" theme (iOS 26 style)
+   Palette: #06141B  #11212D  #253745  #4A5C6A  #9BA8AB  #CCD0CF
+   Accent: VS Code blue  #0065A9  #007ACC  #1F9CF0
+   =========================================================== */
+:root{
+  --c0:#06141B;   /* deepest background */
+  --c1:#11212D;   /* raised background */
+  --c2:#253745;   /* panels, device body */
+  --c3:#4A5C6A;   /* accents, fills */
+  --c4:#9BA8AB;   /* muted text, soft fills */
+  --c5:#CCD0CF;   /* main text, primary button */
+
+  --text:var(--c5);
+  --muted:var(--c4);
+  --blue:#007ACC;   /* accent: buttons, ticks, active states */
+  --blue-hi:#1F9CF0;
+  --blue-lo:#0065A9;
+  --blue-glow:rgba(31,156,240,.55);
+  --blue-soft:rgba(0,122,204,.16);
+  --sos:#E5676B;          /* only for the emergency button */
+  --sos-soft:rgba(229,103,107,.14);
+
+  /* Glass recipe */
+  --glass-fill:linear-gradient(145deg, rgba(204,208,207,.13) 0%, rgba(204,208,207,.05) 45%, rgba(204,208,207,.03) 100%);
+  --glass-fill-strong:linear-gradient(145deg, rgba(204,208,207,.22) 0%, rgba(155,168,171,.10) 50%, rgba(155,168,171,.06) 100%);
+  --glass-edge:rgba(204,208,207,.16);
+  --glass-blur:blur(28px) saturate(170%);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(255,255,255,.04),
+    inset 1px 0 0 rgba(255,255,255,.05),
+    0 30px 60px -30px rgba(0,0,0,.75),
+    0 8px 20px -12px rgba(0,0,0,.5);
+  --inner:rgba(204,208,207,.07);       /* fill for elements inside glass */
+  --inner-edge:rgba(204,208,207,.12);
+
+  --sans:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Noto Sans Sinhala', system-ui, 'Segoe UI', sans-serif;
+
+  --r-xl:36px;
+  --r-lg:28px;
+  --r-md:18px;
+  --r-sm:12px;
+  --wrap:1600px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px;background:var(--c0)}
+body{
+  margin:0;min-height:100vh;
+  background:transparent;
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:17px;line-height:1.6;letter-spacing:-0.005em;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.03em;line-height:1.08;color:#E4E7E6}
+h3{letter-spacing:-0.015em;line-height:1.25}
+p{margin:0}
+.sinhala{font-family:'Noto Sans Sinhala', var(--sans)}
+.tamil{font-family:'Noto Sans Tamil', var(--sans)}
+.nova{color:var(--blue-hi);text-shadow:0 0 18px rgba(31,156,240,.45)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(24px,4vw,64px)}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+::selection{background:rgba(31,156,240,.35)}
+:focus-visible{outline:2px solid var(--blue-hi);outline-offset:3px;border-radius:10px}
+.skip{position:absolute;left:16px;top:-60px;background:var(--c5);color:var(--c0);padding:10px 16px;border-radius:12px;z-index:200;text-decoration:none;font-weight:600}
+.skip:focus{top:12px}
+
+/* ---------- Ambient light behind the glass ---------- */
+.ambient{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(120% 70% at 50% -10%, #253745 0%, rgba(37,55,69,0) 60%),
+    radial-gradient(80% 60% at 50% 110%, #11212D 0%, rgba(17,33,45,0) 70%),
+    var(--c0);
+}
+.glow{position:absolute;border-radius:50%;filter:blur(70px)}
+.g1{width:620px;height:620px;left:-220px;top:10%;background:radial-gradient(circle, rgba(0,122,204,.45), rgba(0,122,204,0) 70%)}
+.g2{width:720px;height:720px;right:-280px;top:36%;background:radial-gradient(circle, rgba(31,156,240,.32), rgba(37,55,69,0) 70%)}
+.g3{width:560px;height:560px;left:30%;bottom:-220px;background:radial-gradient(circle, rgba(74,92,106,.6), rgba(37,55,69,0) 70%)}
+.g4{width:520px;height:520px;left:-240px;bottom:4%;background:radial-gradient(circle, rgba(74,92,106,.65), rgba(37,55,69,0) 70%)}
+.g5{width:480px;height:480px;right:-200px;top:-6%;background:radial-gradient(circle, rgba(0,101,169,.4), rgba(0,101,169,0) 70%)}
+/* faint dot grid that fills the outer edges on wide screens */
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(204,208,207,.10) 1px, transparent 1.4px);background-size:28px 28px;
+  -webkit-mask-image:linear-gradient(90deg,#000 0,rgba(0,0,0,.0) 22%,rgba(0,0,0,0) 78%,#000 100%);mask-image:linear-gradient(90deg,#000 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 78%,#000 100%)}
+/* the thin horizontal light streaks from the palette image */
+.streak{position:absolute;height:3px;width:46vw;filter:blur(2px);opacity:.55;
+  background:linear-gradient(90deg, rgba(31,156,240,0), rgba(140,205,255,.9), rgba(31,156,240,0))}
+.streak::after{content:"";position:absolute;inset:-40px 10%;border-radius:50%;filter:blur(30px);background:rgba(0,122,204,.28)}
+.s1{left:-18vw;top:22%}
+.s2{right:-18vw;top:22%}
+.s3{left:-20vw;top:72%}
+.s4{right:-20vw;top:72%}
+@media (prefers-reduced-motion:no-preference){
+  .g1{animation:drift1 26s ease-in-out infinite alternate}
+  .g2{animation:drift2 32s ease-in-out infinite alternate}
+  @keyframes drift1{to{transform:translate(120px,80px)}}
+  @keyframes drift2{to{transform:translate(-140px,-60px)}}
+}
+
+/* ---------- Glass surface ---------- */
+.glass,
+.nav,.compare-col,.tile,.trust-panel,.helpers-card,.join-card,.faq-list,.chart,.status,.float-card,.tabs,.disclaimer{
+  position:relative;
+  background:var(--glass-fill);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--glass-shadow);
+}
+/* specular highlight along the top edge */
+.nav::before,.compare-col::before,.tile::before,.trust-panel::before,.helpers-card::before,.join-card::before,.chart::before,.float-card::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 28%);
+  mask:linear-gradient(#000,#000);
+}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;
+  min-height:50px;padding:0 26px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+  font-weight:600;font-size:16px;letter-spacing:-0.01em;
+  background:linear-gradient(180deg, var(--blue-hi) 0%, var(--blue) 100%);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 12px 28px -10px var(--blue-glow);
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.btn:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 16px 36px -8px rgba(31,156,240,.75)}
+.btn:active{transform:scale(.98)}
+.btn-ghost{
+  background:rgba(204,208,207,.08);color:var(--text);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18), inset 0 0 0 1px rgba(204,208,207,.18);
+}
+.btn-ghost:hover{background:rgba(204,208,207,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.22), inset 0 0 0 1px rgba(204,208,207,.28)}
+.btn-sm{min-height:40px;padding:0 18px;font-size:15px}
+
+/* ---------- Header: floating glass capsule ---------- */
+.site-header{position:fixed;top:14px;left:0;right:0;z-index:60;pointer-events:none}
+.nav{
+  pointer-events:auto;
+  max-width:calc(var(--wrap) - 48px);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  height:64px;padding:0 10px 0 20px;border-radius:999px;
+  background:linear-gradient(145deg, rgba(37,55,69,.55), rgba(17,33,45,.45));
+  transition:background .3s ease;
+}
+.site-header.scrolled .nav{background:linear-gradient(145deg, rgba(37,55,69,.72), rgba(17,33,45,.66))}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-0.02em;color:#E4E7E6}
+.brand-mark{width:34px;height:34px;flex:none;overflow:visible}
+.nav-links{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.nav-links a{display:block;text-decoration:none;font-weight:500;font-size:15px;color:var(--muted);padding:8px 14px;border-radius:999px;transition:color .15s, background .15s}
+.nav-links a:hover{color:var(--text);background:rgba(204,208,207,.08)}
+.nav-cta{display:flex;align-items:center;gap:8px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;align-items:center;justify-content:center;background:rgba(204,208,207,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+.mobile-menu{display:none}
+
+/* ---------- Hero ---------- */
+main{padding-top:92px}
+.hero{padding:64px 0 96px;position:relative;overflow-x:clip}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(56px,6vw,110px);align-items:center}
+.status{display:inline-flex;align-items:center;gap:10px;padding:7px 16px 7px 12px;border-radius:999px;font-size:14.5px;font-weight:500;color:var(--text)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--blue-hi);box-shadow:0 0 0 4px rgba(31,156,240,.2), 0 0 14px rgba(31,156,240,.9)}
+.hero h1{
+  font-size:clamp(2.7rem,5vw,5.2rem);margin:24px 0;max-width:13ch;letter-spacing:-0.045em;
+  background:linear-gradient(180deg, #F1F3F2 20%, #9BA8AB 120%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero h1 .hl{background:linear-gradient(180deg,#8DD0FF 0%,#1F9CF0 70%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(31,156,240,.35))}
+.hero-lead{font-size:clamp(19px,1.3vw,21px);max-width:36em;color:var(--muted)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hero-points{display:flex;flex-wrap:wrap;gap:12px 28px;margin:40px 0 0;padding:0;list-style:none;font-size:15px;font-weight:500;color:var(--text)}
+.hero-points li{display:flex;align-items:center;gap:8px}
+.hero-points svg{color:var(--blue-hi);flex:none}
+
+/* Hero visual */
+.hero-visual{position:relative;min-height:720px;display:flex;justify-content:flex-end;align-items:center;padding-right:4%}
+.sky-shape{position:absolute;inset:4% -8% 0 6%;z-index:0;filter:blur(2px)}
+.phone{
+  position:relative;z-index:2;width:300px;height:640px;border-radius:50px;padding:11px;
+  background:linear-gradient(160deg, #4A5C6A 0%, #253745 40%, #11212D 100%);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.35), inset 0 0 0 1px rgba(204,208,207,.15), 0 50px 90px -30px rgba(0,0,0,.85), 0 0 0 1px rgba(0,0,0,.5);
+}
+.phone-screen{
+  width:100%;height:100%;border-radius:40px;overflow:hidden;position:relative;display:flex;flex-direction:column;
+  background:
+    radial-gradient(90% 50% at 20% 0%, rgba(74,92,106,.9), rgba(74,92,106,0) 70%),
+    radial-gradient(80% 50% at 100% 100%, rgba(74,92,106,.6), rgba(74,92,106,0) 70%),
+    var(--c0);
+}
+.phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:28px;border-radius:20px;background:#000;z-index:3}
+.app-top{padding:52px 16px 10px;color:var(--text)}
+.app-top-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);padding:0 4px}
+.lang-switch{display:flex;gap:2px;background:rgba(204,208,207,.1);border-radius:999px;padding:3px;font-size:12px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.lang-switch span{padding:3px 9px;border-radius:999px;color:var(--muted)}
+.lang-switch span.on{background:var(--blue);color:#fff;box-shadow:0 0 10px rgba(31,156,240,.6)}
+.app-title{font-size:27px;font-weight:700;letter-spacing:-0.03em;line-height:1.15;margin-top:12px;padding:0 4px;color:#EDEFEE}
+.app-helper{
+  display:flex;align-items:center;gap:10px;margin-top:14px;border-radius:18px;padding:10px 12px;font-size:13.5px;
+  background:rgba(204,208,207,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.14), inset 0 0 0 1px rgba(204,208,207,.1);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+}
+.avatar{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;
+  background:linear-gradient(160deg, #9BA8AB, #4A5C6A);color:var(--c0);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.app-body{padding:8px 16px 12px;display:flex;flex-direction:column;gap:8px}
+.app-body-head{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;color:var(--muted);padding:4px 4px 2px}
+.log-item{
+  display:flex;gap:12px;align-items:flex-start;border-radius:16px;padding:9px 12px;font-size:13.5px;line-height:1.35;
+  background:rgba(204,208,207,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), inset 0 0 0 1px rgba(204,208,207,.09);
+}
+.log-check{width:22px;height:22px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;margin-top:1px;box-shadow:0 0 10px rgba(31,156,240,.55)}
+.log-item.pending .log-check{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c3)}
+.log-time{font-size:12px;color:var(--muted);font-weight:600}
+.log-text{font-weight:600;color:var(--text)}
+.sos-bar{margin:auto 16px 18px;display:flex;align-items:center;gap:12px;border-radius:20px;padding:10px 12px;background:var(--sos-soft);box-shadow:inset 0 0 0 1px rgba(229,103,107,.22)}
+.sos-btn{width:44px;height:44px;border-radius:50%;background:var(--sos);color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 6px rgba(229,103,107,.15), 0 0 24px rgba(229,103,107,.45)}
+.sos-bar p{font-size:12.5px;line-height:1.35;color:var(--text)}
+
+.float-card{position:absolute;z-index:3;border-radius:24px;background:linear-gradient(145deg, rgba(204,208,207,.18), rgba(155,168,171,.06))}
+.match-card{left:-6%;bottom:6%;width:258px;padding:16px}
+.match-head{display:flex;gap:12px;align-items:center}
+.match-head .avatar{width:44px;height:44px;font-size:15px}
+.match-name{font-weight:700;font-size:15.5px;line-height:1.2;color:#EDEFEE}
+.verified{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--text);font-weight:600}
+.verified svg{color:var(--blue-hi)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;padding:5px 11px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--text);background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge)}
+.meter-row{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-top:14px}
+.meter{height:8px;border-radius:8px;background:rgba(204,208,207,.1);margin-top:7px;overflow:hidden}
+.meter i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg, var(--blue), var(--blue-hi));box-shadow:0 0 12px rgba(31,156,240,.7)}
+.backup-card{left:-3%;top:14%;width:206px;padding:14px 16px;font-size:13.5px;line-height:1.4;color:var(--muted)}
+.backup-card b{display:block;font-size:14px;margin-bottom:2px;color:var(--text)}
+.backup-card .row{display:flex;gap:10px;align-items:center}
+.backup-icon{width:36px;height:36px;border-radius:12px;background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge);color:var(--text);display:flex;align-items:center;justify-content:center;flex:none}
+
+/* Hero load sequence (the one orchestrated moment) */
+@media (prefers-reduced-motion:no-preference){
+  .js .log-item{opacity:0;transform:translateY(8px)}
+  .js .log-item.in{opacity:1;transform:none;transition:opacity .45s ease, transform .45s ease}
+  .js .log-item.done-now .log-check{animation:pop .4s ease}
+  .js .float-card{opacity:0;transform:translateY(12px) scale(.98)}
+  .js .float-card.in{opacity:1;transform:none;transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)}
+  @keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+}
+
+/* ---------- Sections ---------- */
+section{position:relative}
+.section{padding:104px 0}
+.section-head{max-width:720px;margin-bottom:52px}
+.section-head h2,.context h2{font-size:clamp(2rem,3.8vw,3.1rem)}
+.section-head p{margin-top:16px;font-size:18px;color:var(--muted)}
+
+/* Context chart */
+.context-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.context-copy p{margin-top:18px;font-size:18px;color:var(--muted);max-width:32em}
+.chart{margin:0;border-radius:var(--r-xl);padding:32px}
+.chart-title{font-weight:700;font-size:16px;margin-bottom:22px;color:var(--text)}
+.bars{display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
+.bar-row{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:center}
+.bar-year{font-weight:600;font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar-track{position:relative;height:44px;border-radius:14px;background:rgba(6,20,27,.35);box-shadow:inset 0 1px 2px rgba(0,0,0,.35)}
+.bar-fill{
+  height:100%;border-radius:14px;display:flex;align-items:center;justify-content:flex-end;padding:0 14px;min-width:max-content;
+  font-weight:700;font-size:15px;font-variant-numeric:tabular-nums;color:var(--text);
+  background:linear-gradient(180deg, #4A5C6A, #3B4C59);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+.bar-row.now .bar-fill{background:linear-gradient(180deg, var(--blue-hi), var(--blue));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 0 24px rgba(31,156,240,.45)}
+.bar-row.future .bar-fill{background:repeating-linear-gradient(135deg, rgba(31,156,240,.22) 0 8px, rgba(31,156,240,.07) 8px 16px);box-shadow:inset 0 0 0 1px rgba(31,156,240,.45)}
+.chart-note{margin-top:20px;font-size:13.5px;color:var(--muted);line-height:1.5}
+.chart-note a{color:var(--muted)}
+
+/* Problem vs solution */
+.compare{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;align-items:stretch}
+.compare-col{border-radius:var(--r-xl);padding:40px}
+.compare-today{background:linear-gradient(145deg, rgba(204,208,207,.06), rgba(204,208,207,.02))}
+.compare-new{background:var(--glass-fill-strong);border-color:rgba(31,156,240,.4);box-shadow:var(--glass-shadow),0 0 40px -10px rgba(0,122,204,.35)}
+.compare-col h3{font-size:22px;margin-bottom:6px}
+.compare-col > p{font-size:15.5px;margin-bottom:26px;color:var(--muted)}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+.ticks li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;font-size:16.5px;line-height:1.45}
+.ticks .ic{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.compare-today .ic{background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge);color:var(--c4)}
+.compare-new .ic{background:var(--blue);color:#fff;box-shadow:0 0 12px rgba(31,156,240,.6)}
+.ticks b{display:block;color:var(--text)}
+.ticks span{color:var(--muted)}
+
+/* Features bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.tile{border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.tile h3{font-size:21px}
+.tile p{font-size:15.5px;color:var(--muted)}
+.tile .demo{margin-top:auto;padding-top:18px}
+.span-4{grid-column:span 4}
+.span-3{grid-column:span 3}
+.span-2{grid-column:span 2}
+
+.match-demo{display:grid;grid-template-columns:1fr 1.2fr;gap:16px;align-items:start}
+.needs{border-radius:var(--r-md);padding:16px;background:rgba(6,20,27,.3);box-shadow:inset 0 0 0 1px var(--inner-edge)}
+.needs-label{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px}
+.ranked{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ranked li{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;font-size:14px;background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge)}
+.ranked li:first-child{background:var(--blue-soft);box-shadow:inset 0 1px 0 rgba(255,255,255,.14), inset 0 0 0 1px rgba(31,156,240,.5), 0 0 22px -6px rgba(31,156,240,.5)}
+.ranked li:first-child .pct{color:var(--blue-hi)}
+.ranked .avatar{width:34px;height:34px;font-size:12px}
+.ranked .who b{display:block;font-size:14px;line-height:1.2;color:var(--text)}
+.ranked .who span{font-size:12.5px;color:var(--muted)}
+.ranked .pct{font-weight:700;font-variant-numeric:tabular-nums;color:var(--text)}
+
+.tile-sos{background:linear-gradient(145deg, rgba(229,103,107,.16), rgba(229,103,107,.04))}
+.rings{width:150px;height:150px;border-radius:50%;margin:8px auto 0;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(229,103,107,.25)}
+.rings > div{width:104px;height:104px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(229,103,107,.4)}
+.rings > div > div{width:60px;height:60px;border-radius:50%;background:var(--sos);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(229,103,107,.55)}
+
+.mini-log{display:flex;flex-direction:column;gap:8px}
+.mini-log div{display:flex;gap:10px;align-items:center;font-size:13.5px;font-weight:600;padding:9px 12px;border-radius:14px;background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge)}
+.mini-log i{width:10px;height:10px;border-radius:50%;background:var(--blue-hi);flex:none;box-shadow:0 0 8px rgba(31,156,240,.8)}
+.mini-log .later i{background:transparent;box-shadow:inset 0 0 0 2px var(--c3)}
+.mini-log span{color:var(--muted);font-weight:500;margin-left:auto;font-variant-numeric:tabular-nums}
+
+.notice{border-radius:16px;padding:14px;font-size:13.5px;line-height:1.45;background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge)}
+.notice b{display:block;margin-bottom:8px;font-size:14px}
+.notice-row{display:flex;align-items:center;gap:8px;margin-top:8px}
+.notice-row .avatar{width:28px;height:28px;font-size:11px}
+.notice-row span{font-weight:600}
+.notice-row em{font-style:normal;margin-left:auto;font-size:12.5px;color:#BFE3FF;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--blue-soft);box-shadow:inset 0 0 0 1px rgba(31,156,240,.4)}
+
+.badges{display:flex;gap:12px;align-items:center}
+.badge{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.badge.earned{background:linear-gradient(160deg, var(--blue-hi), var(--blue-lo));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 0 20px rgba(31,156,240,.45)}
+.badge.earned.gold{background:linear-gradient(160deg, #6F8290, #4A5C6A);color:var(--c5);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.badge.locked{box-shadow:inset 0 0 0 1.5px rgba(204,208,207,.22);color:var(--c3);background:repeating-linear-gradient(135deg, transparent 0 6px, rgba(204,208,207,.05) 6px 12px)}
+.badge-caption{font-size:13px;color:var(--muted);margin-top:12px}
+
+.booking{border-radius:var(--r-md);overflow:hidden;font-size:14.5px;background:rgba(6,20,27,.3);box-shadow:inset 0 0 0 1px var(--inner-edge)}
+.booking-row{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--inner-edge)}
+.booking-row span:first-child{color:var(--muted)}
+.booking-row span:last-child{font-weight:600;text-align:right}
+.booking-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--inner)}
+.booking-foot .btn{min-height:38px;font-size:14px;padding:0 16px;pointer-events:none}
+.secure{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);font-weight:600}
+.secure svg{color:var(--blue-hi)}
+
+.langs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lang-tile{border-radius:var(--r-md);padding:40px 10px;text-align:center;font-weight:700;font-size:clamp(20px,2vw,28px);line-height:1.2;background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge);color:var(--text)}
+.lang-tile.on{background:linear-gradient(160deg, var(--blue-hi), var(--blue-lo));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 0 26px rgba(31,156,240,.4)}
+.lang-tile.en{letter-spacing:-0.03em}
+.lang-note{font-size:13.5px;color:var(--muted);margin-top:12px}
+
+/* How it works */
+.how-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px}
+.how-top .section-head{margin-bottom:0}
+.tabs{display:inline-flex;border-radius:999px;padding:5px;gap:4px}
+.tab{border:0;background:transparent;padding:10px 20px;border-radius:999px;font-weight:600;font-size:15.5px;cursor:pointer;color:var(--muted);transition:background .25s,color .25s}
+.tab[aria-selected="true"]{background:linear-gradient(180deg, var(--blue-hi), var(--blue));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 6px 18px -6px rgba(31,156,240,.7)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative}
+.steps::before{content:"";position:absolute;top:23px;left:24px;right:24px;height:1px;background:linear-gradient(90deg, rgba(31,156,240,.7), rgba(204,208,207,.08))}
+.step{position:relative;z-index:1}
+.step-num{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;margin-bottom:22px;color:var(--text);
+  background:linear-gradient(145deg, rgba(37,55,69,.9), rgba(17,33,45,.9));box-shadow:inset 0 1px 0 rgba(255,255,255,.2), inset 0 0 0 1px rgba(204,208,207,.2)}
+.step:first-child .step-num{background:linear-gradient(180deg, var(--blue-hi), var(--blue));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 0 22px rgba(31,156,240,.6)}
+.step h3{font-size:19px;margin-bottom:8px}
+.step p{font-size:15.5px;color:var(--muted)}
+.tab-panel[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .tab-panel.show{animation:fadeIn .35s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+
+/* Trust */
+.trust-panel{border-radius:var(--r-xl);padding:44px}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.trust-item{padding:4px 32px 4px 0}
+.trust-item + .trust-item{padding-left:32px;border-left:1px solid var(--inner-edge)}
+.trust-icon{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--blue-hi);background:var(--inner);box-shadow:inset 0 1px 0 rgba(255,255,255,.12), inset 0 0 0 1px var(--inner-edge)}
+.trust-item h3{font-size:19px;margin-bottom:8px}
+.trust-item p{font-size:15.5px;color:var(--muted)}
+.disclaimer{margin-top:20px;display:flex;gap:16px;align-items:flex-start;border-radius:var(--r-lg);padding:20px 24px;font-size:15.5px;color:var(--muted);background:linear-gradient(145deg, rgba(204,208,207,.06), rgba(204,208,207,.02))}
+.disclaimer b{color:var(--text)}
+.disclaimer svg{color:var(--c4);flex:none;margin-top:2px}
+
+/* Helpers */
+.helpers{padding:0 0 104px}
+.helpers-card{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;border-radius:var(--r-xl);padding:56px}
+.helpers-card h2{font-size:clamp(1.9rem,3.2vw,2.6rem)}
+.helpers-card > div > p{margin-top:16px;font-size:18px;color:var(--muted);max-width:30em}
+.helper-list{list-style:none;margin:28px 0 32px;padding:0;display:flex;flex-direction:column;gap:12px}
+.helper-list li{display:flex;gap:12px;align-items:flex-start;font-size:16.5px}
+.helper-list svg{color:var(--blue-hi);flex:none;margin-top:3px}
+.profile-card{position:relative;border-radius:var(--r-lg);padding:24px;background:rgba(6,20,27,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.12), inset 0 0 0 1px var(--inner-edge), 0 30px 60px -30px rgba(0,0,0,.8)}
+.profile-top{display:flex;gap:14px;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--inner-edge)}
+.profile-top .avatar{width:56px;height:56px;font-size:18px}
+.profile-top b{font-size:18px;display:block;line-height:1.2}
+.profile-sec{padding-top:16px}
+.profile-label{font-size:13px;font-weight:600;color:var(--muted)}
+.profile-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fact{border-radius:14px;padding:10px 12px;background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge)}
+.fact b{display:block;font-size:17px}
+.fact span{font-size:12.5px;color:var(--muted)}
+.score{display:flex;align-items:center;gap:12px;margin-top:10px}
+.score .meter{flex:1;margin:0}
+.score b{font-variant-numeric:tabular-nums}
+
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:start}
+.faq-grid .section-head{position:sticky;top:120px}
+.faq-list{border-radius:var(--r-lg);padding:8px 28px}
+.faq-list details + details{border-top:1px solid var(--inner-edge)}
+.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;font-weight:600;font-size:18px;color:var(--text)}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary .plus{width:32px;height:32px;border-radius:50%;flex:none;position:relative;background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge);transition:background .2s}
+.faq-list summary .plus::before,.faq-list summary .plus::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;background:var(--c5);transform:translate(-50%,-50%);border-radius:2px;transition:transform .25s ease}
+.faq-list summary .plus::after{transform:translate(-50%,-50%) rotate(90deg)}
+.faq-list details[open] summary .plus{background:var(--blue);box-shadow:0 0 12px rgba(31,156,240,.6)}
+.faq-list details[open] summary .plus::before,.faq-list details[open] summary .plus::after{background:#fff}
+.faq-list details[open] summary .plus::after{transform:translate(-50%,-50%) rotate(0deg)}
+.faq-list details p{padding:0 52px 24px 0;color:var(--muted);font-size:16.5px}
+
+/* Waitlist */
+.join{padding:0 0 96px}
+.join-card{border-radius:var(--r-xl);padding:72px 56px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;overflow:hidden;background:var(--glass-fill-strong);border-color:rgba(204,208,207,.24)}
+.join-card::after{content:"";position:absolute;width:620px;height:620px;border-radius:50%;right:-200px;top:-280px;pointer-events:none;
+  background:radial-gradient(circle, rgba(31,156,240,.35), rgba(31,156,240,0) 65%)}
+.join-card h2{font-size:clamp(2rem,3.8vw,3.1rem)}
+.join-card > div > p{margin-top:16px;font-size:18px;color:var(--muted);max-width:28em}
+.join-form{position:relative;z-index:1;border-radius:var(--r-lg);padding:28px;background:rgba(6,20,27,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px var(--inner-edge)}
+.join-form fieldset{border:0;margin:0 0 18px;padding:0}
+.join-form legend{font-weight:600;font-size:15px;margin-bottom:10px}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.role input{position:absolute;opacity:0;pointer-events:none}
+.role label{display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:16px;cursor:pointer;height:100%;font-weight:600;font-size:15px;line-height:1.3;
+  background:var(--inner);box-shadow:inset 0 0 0 1px var(--inner-edge);transition:box-shadow .15s, background .15s}
+.role label span{font-weight:400;font-size:13px;color:var(--muted)}
+.role input:checked + label{background:var(--blue-soft);box-shadow:inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1.5px var(--blue-hi)}
+.role input:focus-visible + label{outline:2px solid var(--blue-hi);outline-offset:2px}
+.field label{display:block;font-weight:600;font-size:15px;margin-bottom:8px}
+.input-row{display:flex;flex-direction:column;gap:10px}
+.input-row input{width:100%;min-height:52px;border-radius:16px;border:0;padding:0 16px;font:inherit;font-size:16px;color:var(--text);
+  background:rgba(204,208,207,.07);box-shadow:inset 0 0 0 1px var(--inner-edge), inset 0 2px 4px rgba(0,0,0,.25)}
+.input-row input::placeholder{color:#7D8B90}
+.input-row input:focus{outline:none;box-shadow:inset 0 0 0 1.5px var(--blue-hi), 0 0 0 4px rgba(31,156,240,.18)}
+.input-row input[aria-invalid="true"]{box-shadow:inset 0 0 0 1.5px var(--sos)}
+.input-row .btn{min-height:52px}
+.form-msg{font-size:14px;margin-top:10px;min-height:1.4em}
+.form-msg.error{color:#F09A9D}
+.form-fine{font-size:13px;color:var(--muted);margin-top:6px}
+.join-success{display:none}
+.join-success.show{display:block}
+.success-icon{width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 0 24px rgba(31,156,240,.6)}
+.join-success h3{font-size:22px;margin-bottom:8px}
+.join-success p{color:var(--muted);font-size:16px}
+.link-btn{background:none;border:0;padding:0;margin-top:14px;color:var(--blue-hi);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--inner-edge);padding:56px 0 40px;font-size:15px;background:linear-gradient(180deg, rgba(6,20,27,0), rgba(6,20,27,.7))}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
+.footer-grid h4{font-size:14px;font-weight:700;margin:0 0 14px;color:var(--text)}
+.footer-grid ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.footer-grid a{text-decoration:none;color:var(--muted)}
+.footer-grid a:hover{color:var(--text);text-decoration:underline}
+.footer-about p{color:var(--muted);margin-top:14px;max-width:26em}
+.footer-team li{color:var(--muted)}
+.footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:48px;padding-top:24px;border-top:1px solid var(--inner-edge);color:var(--muted);font-size:14px}
+
+/* Fallback when the browser can't blur: make glass more solid */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .nav,.compare-col,.tile,.trust-panel,.helpers-card,.join-card,.faq-list,.chart,.status,.float-card,.tabs,.disclaimer{background:rgba(37,55,69,.92)}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1080px){
+  .hero-grid{gap:32px}
+  .hero-visual{padding-right:0}
+  .match-card{left:-2%}
+  .backup-card{left:0}
+  .nav-links a{padding:8px 10px}
+}
+@media (max-width:960px){
+  .nav-links,.nav-cta .btn{display:none}
+  .menu-btn{display:inline-flex}
+  .nav{margin:0 16px;padding:0 8px 0 18px}
+  .mobile-menu{
+    display:block;pointer-events:auto;margin:10px 16px 0;padding:8px 20px 20px;border-radius:28px;
+    background:linear-gradient(145deg, rgba(37,55,69,.85), rgba(17,33,45,.85));
+    -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+    border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow);
+  }
+  .mobile-menu[hidden]{display:none}
+  .mobile-menu ul{list-style:none;margin:0;padding:0}
+  .mobile-menu li a{display:block;padding:14px 0;border-bottom:1px solid var(--inner-edge);text-decoration:none;font-weight:600;font-size:17px}
+  .mobile-menu .btn{width:100%;margin-top:18px}
+
+  .hero{padding-top:36px}
+  .hero-grid,.context-grid,.compare,.helpers-card,.faq-grid,.join-card{grid-template-columns:1fr}
+  .hero h1{max-width:14ch}
+  .hero-visual{min-height:700px;justify-content:center}
+  .match-card{left:0}
+  .context-grid{gap:40px}
+  .faq-grid{gap:24px}
+  .faq-grid .section-head{position:static}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .span-4,.span-3{grid-column:span 2}
+  .span-2{grid-column:span 1}
+  .steps{grid-template-columns:1fr 1fr;row-gap:40px}
+  .steps::before{display:none}
+  .trust-panel{padding:32px}
+  .trust-grid{grid-template-columns:1fr;gap:28px}
+  .trust-item,.trust-item + .trust-item{padding:0;border-left:0}
+  .trust-item + .trust-item{padding-top:28px;border-top:1px solid var(--inner-edge)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .helpers-card{padding:40px}
+  .join-card{padding:48px 32px}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  main{padding-top:84px}
+  .section{padding:72px 0}
+  .helpers{padding-bottom:72px}
+  .hero{padding-bottom:64px}
+  .hero-lead{font-size:17.5px}
+  .hero-actions .btn{flex:1 1 auto}
+  .hero-visual{min-height:auto;padding:24px 0 0;flex-direction:column;align-items:center}
+  .sky-shape{inset:0 -20% 10% -20%}
+  .phone{width:280px;height:620px}
+  .match-card{position:relative;left:auto;bottom:auto;width:min(310px,92%);margin-top:-70px}
+  .backup-card{display:none}
+  .compare-col{padding:28px 22px}
+  .chart{padding:24px 18px}
+  .bento{grid-template-columns:1fr}
+  .span-4,.span-3,.span-2{grid-column:span 1}
+  .match-demo{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .trust-panel{padding:28px 22px}
+  .helpers-card{padding:28px 22px}
+  .faq-list{padding:4px 20px}
+  .faq-list details p{padding-right:0}
+  .roles{grid-template-columns:1fr}
+  .join-card{padding:40px 20px;border-radius:var(--r-lg)}
+  .join-form{padding:22px 18px}
+  .footer-grid{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:48px 1fr;gap:10px}
+  .streak{width:80vw}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Ambient light that the glass panels blur -->
+<div class="ambient" aria-hidden="true">
+  <span class="dots"></span><span class="glow g1"></span><span class="glow g2"></span><span class="glow g3"></span><span class="glow g4"></span><span class="glow g5"></span>
+  <span class="streak s1"></span><span class="streak s2"></span><span class="streak s3"></span><span class="streak s4"></span>
+</div>
+
+<!-- Shared icon sprites -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6l7-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8L12 3.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-notes" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 9h6M9 13h6M9 17h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 7h11l-3-3M17 17H6l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v5M12 7.6v.1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 017 0v2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 13.5L8 21l4-2 4 2-1-7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a href="#top" class="brand" aria-label="CareNova home">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="hh1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1F3F2"/><stop offset="1" stop-color="#9BA8AB"/></linearGradient><filter id="hg1" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M24 46 V82 H76 V46" fill="none" stroke="url(#hh1)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/><path d="M14 50 L50 18 L86 50" fill="none" stroke="url(#hh1)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 82 C30 70 16 57 16 41 C16 30 24 22 34 22 C41 22 47 26 50 32 C53 26 59 22 66 22 C76 22 84 30 84 41 C84 57 70 70 50 82Z" transform="translate(29,44) scale(.42)" fill="#1F9CF0" filter="url(#hg1)"/></svg>
+      <span>Care<span class="nova">Nova</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#safety">Safety</a></li>
+      <li><a href="#helpers">For helpers</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#join" class="btn btn-sm">Join the waitlist</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="#CCD0CF" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#safety">Safety</a></li>
+      <li><a href="#helpers">For helpers</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#join" class="btn">Join the waitlist</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="status"><span class="status-dot" aria-hidden="true"></span>Coming soon for families across Sri Lanka</span>
+      <h1 id="hero-title">Care for Amma, <span class="hl">even when you can't be there.</span></h1>
+      <p class="hero-lead">CareNova helps Sri Lankan families find a trusted helper for an elderly or ill relative. See each helper's qualifications, experience and the conditions they can handle, then book and pay in one app.</p>
+      <div class="hero-actions">
+        <a href="#join" class="btn">Join the waitlist</a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+      <ul class="hero-points">
+        <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>Matched to your relative's condition</li>
+        <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>Daily care updates</li>
+        <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>Emergency SOS</li>
+        <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>සිංහල · தமிழ் · English</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual" aria-label="Preview of the CareNova app showing today's care log for Amma" role="img">
+      <svg class="sky-shape" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path d="M300 40c120 0 230 60 250 180s-40 250-160 310-250 40-320-60S40 240 100 150 180 40 300 40z" fill="rgba(74,92,106,.28)"/>
+        <circle cx="490" cy="110" r="38" fill="#9BA8AB" opacity=".18"/>
+        <circle cx="96" cy="470" r="22" fill="#9BA8AB" opacity=".18"/>
+      </svg>
+
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="app-top">
+            <div class="app-top-row">
+              <span>Friday</span>
+              <span class="lang-switch"><span class="on">EN</span><span class="sinhala">සිං</span><span class="tamil">தமி</span></span>
+            </div>
+            <div class="app-title">Today with Amma</div>
+            <div class="app-helper">
+              <span class="avatar">NP</span>
+              <span><b>Nirmala</b> is with Amma until 6 pm</span>
+            </div>
+          </div>
+          <div class="app-body">
+            <div class="app-body-head"><span>Care log</span><span>3 of 4 done</span></div>
+            <div class="log-item"><span class="log-check"><svg width="13" height="13"><use href="#i-check"/></svg></span><div><div class="log-time">7:30 am</div><div class="log-text">Breakfast and medicine</div></div></div>
+            <div class="log-item"><span class="log-check"><svg width="13" height="13"><use href="#i-check"/></svg></span><div><div class="log-time">10:00 am</div><div class="log-text">Short walk in the garden</div></div></div>
+            <div class="log-item"><span class="log-check"><svg width="13" height="13"><use href="#i-check"/></svg></span><div><div class="log-time">1:00 pm</div><div class="log-text">Lunch, blood sugar checked</div></div></div>
+            <div class="log-item pending"><span class="log-check"></span><div><div class="log-time">4:00 pm</div><div class="log-text">Physio exercises</div></div></div>
+          </div>
+          <div class="sos-bar">
+            <span class="sos-btn">SOS</span>
+            <p>Hold for 3 seconds to alert family with Amma's location</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-card match-card">
+        <div class="match-head">
+          <span class="avatar">NP</span>
+          <div>
+            <div class="match-name">Nirmala Perera</div>
+            <span class="verified"><svg width="14" height="14"><use href="#i-shield"/></svg>Documents verified</span>
+          </div>
+        </div>
+        <div class="chips"><span class="chip">Dementia care</span><span class="chip">Diabetes</span><span class="chip">6 yrs exp.</span></div>
+        <div class="meter-row"><span>Match for Amma's needs</span><span>94%</span></div>
+        <div class="meter"><i style="width:94%"></i></div>
+      </div>
+
+      <div class="float-card backup-card">
+        <div class="row">
+          <span class="backup-icon"><svg width="20" height="20"><use href="#i-swap"/></svg></span>
+          <div><b>Backup ready</b>2 helpers can cover Tuesday</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTEXT ================= -->
+<section class="section context" id="why" style="padding-top:40px" aria-labelledby="why-title">
+  <div class="wrap context-grid">
+    <div class="context-copy">
+      <h2 id="why-title">Sri Lanka is ageing fast. Care at home needs to catch up.</h2>
+      <p>More people need daily support, while fewer working-age relatives are at home to give it. Many families now look for a paid helper, often for the first time.</p>
+      <p>Today that search runs on referrals, classified ads and agencies, with no clear way to see who is qualified or what they can handle.</p>
+    </div>
+    <figure class="chart">
+      <figcaption class="chart-title">Share of Sri Lankans aged 60 and over</figcaption>
+      <ul class="bars">
+        <li class="bar-row"><span class="bar-year">1981</span><div class="bar-track"><div class="bar-fill" style="width:26.4%">6.6%</div></div></li>
+        <li class="bar-row"><span class="bar-year">2012</span><div class="bar-track"><div class="bar-fill" style="width:48%">12%</div></div></li>
+        <li class="bar-row now"><span class="bar-year">2024</span><div class="bar-track"><div class="bar-fill" style="width:72%">18%</div></div></li>
+        <li class="bar-row future"><span class="bar-year">2040</span><div class="bar-track"><div class="bar-fill" style="width:100%">About 1 in 4 (projected)</div></div></li>
+      </ul>
+      <p class="chart-note">Census figures for 1981, 2012 and 2024, and the health authorities' projection for 2040. Sources: <a href="https://www.sundaytimes.lk/260830/news/growing-old-before-growing-rich-preparing-lanka-for-an-ageing-future-653676.html">Sunday Times (2026)</a>, <a href="https://www.asiainsurancereview.com/News/View-NewsLetter-Article/id/93420/type/Conferences/Gallery">Asia Insurance Review (2025)</a>.</p>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= PROBLEM VS SOLUTION ================= -->
+<section class="section" id="problem" aria-labelledby="problem-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="problem-title">Finding a helper shouldn't be guesswork</h2>
+      <p>You're trusting someone with a person you love. You should know exactly who they are and what they can do before they arrive.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-col compare-today">
+        <h3>How families find help today</h3>
+        <p>Word of mouth, ikman ads and private agencies.</p>
+        <ul class="ticks">
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-x"/></svg></span><div><b>Qualifications you can't check</b><span>A recommendation is all you have to go on.</span></div></li>
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-x"/></svg></span><div><b>No match for the condition</b><span>Caring for dementia or recovery after a stroke needs different skills.</span></div></li>
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-x"/></svg></span><div><b>Little visibility once care starts</b><span>No daily record and no quick way to raise an alarm.</span></div></li>
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-x"/></svg></span><div><b>Starting again when plans fall through</b><span>If a helper can't come, the search begins from zero.</span></div></li>
+        </ul>
+      </div>
+      <div class="compare-col compare-new">
+        <h3>With CareNova</h3>
+        <p>One app to find, book and stay in touch with your relative's care.</p>
+        <ul class="ticks">
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Clear helper profiles</b><span>Qualifications, experience, skills and the conditions each helper handles.</span></div></li>
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Condition-specific matching</b><span>Helpers ranked by how well they suit your relative's needs.</span></div></li>
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Daily care logs and an SOS button</b><span>See what happened each day, and get an alert with location in an emergency.</span></div></li>
+          <li><span class="ic"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Backup helpers suggested for you</b><span>If a booking falls through, suitable replacements are ready.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="section features" id="features" aria-labelledby="features-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="features-title">Everything you need to arrange care at home</h2>
+      <p>From the first search to the daily routine, CareNova keeps the whole family in the loop.</p>
+    </div>
+
+    <div class="bento">
+      <article class="tile span-4">
+        <h3>Matching that starts with the condition</h3>
+        <p>Tell us what your relative needs. CareNova ranks helpers by their experience with that condition, their skills, language and location, with AI-assisted scoring.</p>
+        <div class="demo match-demo">
+          <div class="needs">
+            <div class="needs-label">Amma needs</div>
+            <div class="chips">
+              <span class="chip">Dementia care</span>
+              <span class="chip">Help with walking</span>
+              <span class="chip">Sinhala speaking</span>
+              <span class="chip">Galle area</span>
+              <span class="chip">Weekdays, 8 am to 6 pm</span>
+            </div>
+          </div>
+          <ol class="ranked" aria-label="Example ranked helpers">
+            <li><span class="avatar">NP</span><span class="who"><b>Nirmala P.</b><span>Dementia, mobility</span></span><span class="pct">94%</span></li>
+            <li><span class="avatar">SF</span><span class="who"><b>Shiromi F.</b><span>Elderly care, diabetes</span></span><span class="pct">87%</span></li>
+            <li><span class="avatar">KJ</span><span class="who"><b>Kumari J.</b><span>Post-stroke support</span></span><span class="pct">81%</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="tile span-2 tile-sos">
+        <h3>Emergency SOS</h3>
+        <p>One button sends an alert to family with your relative's live location.</p>
+        <div class="demo">
+          <div class="rings"><div><div><svg width="26" height="26"><use href="#i-pin"/></svg></div></div></div>
+        </div>
+      </article>
+
+      <article class="tile span-2">
+        <h3>Daily care logs</h3>
+        <p>Meals, medicine, walks and notes, recorded by the helper as the day goes on.</p>
+        <div class="demo mini-log">
+          <div><i></i>Morning medicine<span>7:30</span></div>
+          <div><i></i>Lunch and blood sugar<span>13:00</span></div>
+          <div class="later"><i></i>Physio exercises<span>16:00</span></div>
+        </div>
+      </article>
+
+      <article class="tile span-2">
+        <h3>Backup helpers</h3>
+        <p>If your helper can't make it, CareNova suggests suitable replacements.</p>
+        <div class="demo">
+          <div class="notice">
+            <b>Nirmala is away on Tuesday</b>
+            <div class="notice-row"><span class="avatar">SF</span><span>Shiromi F.</span><em>Available</em></div>
+            <div class="notice-row"><span class="avatar">KJ</span><span>Kumari J.</span><em>Available</em></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile span-2">
+        <h3>Helpers who keep learning</h3>
+        <p>In-app training earns badges, and each badge raises a helper's matching score.</p>
+        <div class="demo">
+          <div class="badges" aria-label="Two badges earned, one still to earn">
+            <span class="badge earned"><svg width="28" height="28"><use href="#i-medal"/></svg></span>
+            <span class="badge earned gold"><svg width="28" height="28"><use href="#i-star"/></svg></span>
+            <span class="badge locked"><svg width="26" height="26"><use href="#i-lock"/></svg></span>
+          </div>
+          <div class="badge-caption">First aid, Dementia basics, Safe lifting</div>
+        </div>
+      </article>
+
+      <article class="tile span-3">
+        <h3>Book and pay in one place</h3>
+        <p>Confirm dates and hours, then pay securely in the app. No agency in the middle.</p>
+        <div class="demo">
+          <div class="booking">
+            <div class="booking-row"><span>Helper</span><span>Nirmala Perera</span></div>
+            <div class="booking-row"><span>Dates</span><span>Mon to Fri, 2 weeks</span></div>
+            <div class="booking-row"><span>Hours</span><span>8 am to 6 pm</span></div>
+            <div class="booking-foot"><span class="secure"><svg width="16" height="16"><use href="#i-lock"/></svg>Secure in-app payment</span><span class="btn" aria-hidden="true">Confirm booking</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile span-3">
+        <h3>In Sinhala, Tamil and English</h3>
+        <p>Families and helpers can use the whole app in the language they're most comfortable with.</p>
+        <div class="demo">
+          <div class="langs">
+            <div class="lang-tile on sinhala" lang="si">සිංහල</div>
+            <div class="lang-tile tamil" lang="ta">தமிழ்</div>
+            <div class="lang-tile en">English</div>
+          </div>
+          <p class="lang-note">Switch language at any time, and helpers can pick their own.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="section" id="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="how-top">
+      <div class="section-head">
+        <h2 id="how-title">How CareNova works</h2>
+        <p>A few simple steps, whether you're arranging care or offering it.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Choose your role">
+        <button class="tab" role="tab" id="tab-families" aria-selected="true" aria-controls="panel-families">For families</button>
+        <button class="tab" role="tab" id="tab-helpers" aria-selected="false" aria-controls="panel-helpers" tabindex="-1">For helpers</button>
+      </div>
+    </div>
+
+    <div class="tab-panel show" role="tabpanel" id="panel-families" aria-labelledby="tab-families">
+      <ol class="steps">
+        <li class="step"><div class="step-num">1</div><h3>Describe your relative's needs</h3><p>Add their condition, the support they need, your location, preferred language and hours.</p></li>
+        <li class="step"><div class="step-num">2</div><h3>Compare matched helpers</h3><p>See profiles ranked by fit, with qualifications, experience, ratings and reviews.</p></li>
+        <li class="step"><div class="step-num">3</div><h3>Book and pay in the app</h3><p>Choose dates and hours, confirm your helper and pay securely.</p></li>
+        <li class="step"><div class="step-num">4</div><h3>Stay updated every day</h3><p>Read the daily care log, and get SOS alerts and backup suggestions if you need them.</p></li>
+      </ol>
+    </div>
+
+    <div class="tab-panel" role="tabpanel" id="panel-helpers" aria-labelledby="tab-helpers" hidden>
+      <ol class="steps">
+        <li class="step"><div class="step-num">1</div><h3>Create your profile</h3><p>List your qualifications, experience, skills and the conditions you can care for.</p></li>
+        <li class="step"><div class="step-num">2</div><h3>Add documents and references</h3><p>Upload certificates and references so families can see what you've provided.</p></li>
+        <li class="step"><div class="step-num">3</div><h3>Accept bookings</h3><p>Get matched with families whose needs fit your skills, and get paid through the app.</p></li>
+        <li class="step"><div class="step-num">4</div><h3>Earn training badges</h3><p>Complete in-app training to earn badges and improve your matching score.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRUST ================= -->
+<section class="section" id="safety" aria-labelledby="safety-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="safety-title">Built around trust and safety</h2>
+      <p>Clear information before you book, and peace of mind once care begins.</p>
+    </div>
+    <div class="trust-panel">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="24" height="24"><use href="#i-shield"/></svg></div>
+        <h3>Transparent profiles</h3>
+        <p>Helpers submit qualifications and references with their profile, and you can see exactly what each one has provided.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="24" height="24"><use href="#i-star"/></svg></div>
+        <h3>Ratings and reviews</h3>
+        <p>Families rate helpers after each booking, so the next family can choose with confidence.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="24" height="24"><use href="#i-notes"/></svg></div>
+        <h3>Logs and alerts</h3>
+        <p>Daily care logs show how the day went, and the SOS button shares your relative's location in an emergency.</p>
+      </div>
+    </div>
+    </div>
+    <div class="disclaimer">
+      <svg width="22" height="22" aria-hidden="true"><use href="#i-info"/></svg>
+      <p><b>CareNova is not a medical service.</b> Helpers support daily living and personal care. They don't diagnose, treat or prescribe, so please keep your relative's doctor involved in their medical care.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOR HELPERS ================= -->
+<section class="helpers" id="helpers" aria-labelledby="helpers-title">
+  <div class="wrap">
+    <div class="helpers-card">
+      <div>
+        <h2 id="helpers-title">Are you a care helper? Get matched with families who need your skills.</h2>
+        <p>Show families what you're trained for and find work that fits your experience.</p>
+        <ul class="helper-list">
+          <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>A profile that shows your qualifications and the conditions you handle</li>
+          <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>Bookings matched to your skills, location and language</li>
+          <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>Payment through the app, with no agency in the middle</li>
+          <li><svg width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg>Free in-app training that raises your matching score</li>
+        </ul>
+        <a href="#join" class="btn" data-role="helper">Join as a helper</a>
+      </div>
+      <div class="profile-card" aria-label="Example helper profile">
+        <div class="profile-top">
+          <span class="avatar">NP</span>
+          <div><b>Nirmala Perera</b><span class="verified"><svg width="14" height="14"><use href="#i-shield"/></svg>Documents verified</span></div>
+        </div>
+        <div class="profile-sec">
+          <div class="profile-facts">
+            <div class="fact"><b>6 years</b><span>Experience</span></div>
+            <div class="fact"><b>4.9</b><span>Average rating</span></div>
+          </div>
+        </div>
+        <div class="profile-sec">
+          <div class="profile-label">Conditions handled</div>
+          <div class="chips"><span class="chip">Dementia</span><span class="chip">Diabetes</span><span class="chip">Mobility support</span></div>
+        </div>
+        <div class="profile-sec">
+          <div class="profile-label">Matching score</div>
+          <div class="score"><div class="meter"><i style="width:88%"></i></div><b>88</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+  <div class="wrap faq-grid">
+    <div class="section-head">
+      <h2 id="faq-title">Questions families ask</h2>
+      <p>Can't find what you're looking for? Join the waitlist and we'll keep you posted as we build.</p>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>Who is CareNova for?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Families in Sri Lanka who need a paid helper for an elderly or ill relative, and helpers who want to offer their care skills. Hospitals and doctors may join in a later stage.</p>
+      </details>
+      <details>
+        <summary>How are helpers checked?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Helpers upload their qualifications and references when they build a profile, and this is shown clearly to families. CareNova doesn't carry out its own background checks, so we recommend reading each profile and its reviews before you book.</p>
+      </details>
+      <details>
+        <summary>How does the matching work?<span class="plus" aria-hidden="true"></span></summary>
+        <p>You describe your relative's condition and needs. CareNova compares them with each helper's experience, skills, training badges, language and location, then ranks the helpers who fit best.</p>
+      </details>
+      <details>
+        <summary>What happens if my helper can't come?<span class="plus" aria-hidden="true"></span></summary>
+        <p>CareNova suggests suitable backup helpers so you can arrange cover quickly, without starting your search again.</p>
+      </details>
+      <details>
+        <summary>Which languages does the app support?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Sinhala, Tamil and English. You can switch at any time, and families and helpers can each use the language they prefer.</p>
+      </details>
+      <details>
+        <summary>How do payments work?<span class="plus" aria-hidden="true"></span></summary>
+        <p>You pay for a booking inside the app through a secure payment provider. CareNova takes a small commission on each booking to run the service.</p>
+      </details>
+      <details>
+        <summary>When can I start using CareNova?<span class="plus" aria-hidden="true"></span></summary>
+        <p>CareNova is in development. Join the waitlist and we'll email you as soon as it's ready to try.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WAITLIST ================= -->
+<section class="join" id="join" aria-labelledby="join-title">
+  <div class="wrap">
+    <div class="join-card">
+      <div>
+        <h2 id="join-title">Be the first to know when CareNova launches</h2>
+        <p>Leave your email and we'll let you know as soon as the app is ready for families and helpers.</p>
+      </div>
+
+      <div class="join-form">
+        <form id="waitlist-form" novalidate>
+          <fieldset>
+            <legend>I'm joining as</legend>
+            <div class="roles">
+              <div class="role">
+                <input type="radio" name="role" id="role-family" value="family" checked>
+                <label for="role-family">A family member<span>Looking for care for a relative</span></label>
+              </div>
+              <div class="role">
+                <input type="radio" name="role" id="role-helper" value="helper">
+                <label for="role-helper">A care helper<span>Offering care to families</span></label>
+              </div>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="email">Email address</label>
+            <div class="input-row">
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" aria-describedby="email-msg">
+              <button class="btn" type="submit">Join the waitlist</button>
+            </div>
+            <p class="form-msg" id="email-msg" aria-live="polite"></p>
+            <p class="form-fine">We'll only use your email to tell you about CareNova.</p>
+          </div>
+        </form>
+
+        <div class="join-success" id="join-success" role="status" tabindex="-1">
+          <div class="success-icon"><svg width="26" height="26"><use href="#i-check"/></svg></div>
+          <h3>You're on the waitlist</h3>
+          <p id="success-text">We'll email you as soon as CareNova is ready.</p>
+          <button type="button" class="link-btn" id="join-again">Add another email</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="#top" class="brand" aria-label="CareNova home">
+          <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="hh2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1F3F2"/><stop offset="1" stop-color="#9BA8AB"/></linearGradient><filter id="hg2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M24 46 V82 H76 V46" fill="none" stroke="url(#hh2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/><path d="M14 50 L50 18 L86 50" fill="none" stroke="url(#hh2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 82 C30 70 16 57 16 41 C16 30 24 22 34 22 C41 22 47 26 50 32 C53 26 59 22 66 22 C76 22 84 30 84 41 C84 57 70 70 50 82Z" transform="translate(29,44) scale(.42)" fill="#1F9CF0" filter="url(#hg2)"/></svg>
+          <span>Care<span class="nova">Nova</span></span>
+        </a>
+        <p>A caregiver booking app for Sri Lankan families. Built as a Software Development Group Project at IIT, in collaboration with the University of Westminster.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#safety">Safety</a></li>
+          <li><a href="#helpers">For helpers</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-team">
+        <h4>The team (Group CS78)</h4>
+        <ul>
+          <li>Nimsara Rajapakse</li>
+          <li>Samidi Wedage</li>
+          <li>Malki Ovindi</li>
+          <li>Thisath Samarawickrama</li>
+          <li>Nadil Athuraliya</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sources</h4>
+        <ul>
+          <li><a href="https://www.sundaytimes.lk/260830/news/growing-old-before-growing-rich-preparing-lanka-for-an-ageing-future-653676.html">Sunday Times (2026), Growing old before growing rich</a></li>
+          <li><a href="https://www.asiainsurancereview.com/News/View-NewsLetter-Article/id/93420/type/Conferences/Gallery">Asia Insurance Review (2025), Over-60s by 2040</a></li>
+          <li><a href="https://www.asianews.it/en/south-asia/sri-lanka/as-sri-lanka-s-population-ages-the-vulnerability-of-senior-citizens-grows">AsiaNews (2025), Sri Lanka's ageing population</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year">2026</span> CareNova. A university project, not yet a live service.</span>
+      <a href="#top">Back to top</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Year */
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
+  /* Header border on scroll */
+  var header = document.querySelector('.site-header');
+  function onScroll(){ header.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* Mobile menu */
+  var menuBtn = document.querySelector('.menu-btn');
+  var menu = document.getElementById('mobile-menu');
+  function setMenu(open){
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.hidden = !open;
+  }
+  menuBtn.addEventListener('click', function(){ setMenu(menu.hidden); });
+  menu.addEventListener('click', function(e){ if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !menu.hidden){ setMenu(false); menuBtn.focus(); } });
+
+  /* Hero: care log fills in, one entry at a time */
+  var items = document.querySelectorAll('.log-item');
+  var floats = document.querySelectorAll('.float-card');
+  if (reduce){
+    items.forEach(function(el){ el.classList.add('in'); });
+    floats.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    items.forEach(function(el, i){
+      setTimeout(function(){ el.classList.add('in'); if (!el.classList.contains('pending')) el.classList.add('done-now'); }, 350 + i * 260);
+    });
+    floats.forEach(function(el, i){
+      setTimeout(function(){ el.classList.add('in'); }, 1400 + i * 220);
+    });
+  }
+
+  /* Back to top + logo links: smooth scroll to the very top */
+  document.querySelectorAll('a[href="#top"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
+      if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+    });
+  });
+
+  /* How it works tabs */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function selectTab(tab, focus){
+    tabs.forEach(function(t){
+      var on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute('aria-controls'));
+      panel.hidden = !on;
+      panel.classList.toggle('show', on);
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ selectTab(tab); });
+    tab.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.preventDefault();
+        var next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        selectTab(next, true);
+      }
+    });
+  });
+
+  /* "Join as a helper" pre-selects the helper role */
+  document.querySelectorAll('[data-role]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var r = document.getElementById('role-' + a.getAttribute('data-role'));
+      if (r) r.checked = true;
+    });
+  });
+
+  /* Waitlist form
+     NOTE: there is no backend yet. Connect submitWaitlist() to your
+     own API (for example a Spring Boot endpoint or Firebase) before launch. */
+  var form = document.getElementById('waitlist-form');
+  var email = document.getElementById('email');
+  var msg = document.getElementById('email-msg');
+  var success = document.getElementById('join-success');
+  var successText = document.getElementById('success-text');
+  var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function submitWaitlist(data){
+    // TODO: replace with a real request, e.g.
+    // return fetch('/api/waitlist', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+    try {
+      var list = JSON.parse(localStorage.getItem('carenova-waitlist') || '[]');
+      list.push(data);
+      localStorage.setItem('carenova-waitlist', JSON.stringify(list));
+    } catch (e) { /* storage not available, ignore */ }
+    return Promise.resolve();
+  }
+
+  email.addEventListener('input', function(){
+    if (email.getAttribute('aria-invalid') === 'true' && pattern.test(email.value.trim())){
+      email.removeAttribute('aria-invalid'); msg.textContent = ''; msg.className = 'form-msg';
+    }
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var value = email.value.trim();
+    if (!value){
+      email.setAttribute('aria-invalid', 'true');
+      msg.textContent = 'Enter your email address to join the waitlist.';
+      msg.className = 'form-msg error'; email.focus(); return;
+    }
+    if (!pattern.test(value)){
+      email.setAttribute('aria-invalid', 'true');
+      msg.textContent = 'Enter an email address like name@example.com.';
+      msg.className = 'form-msg error'; email.focus(); return;
+    }
+    var role = form.querySelector('input[name="role"]:checked').value;
+    submitWaitlist({email:value, role:role, at:new Date().toISOString()}).then(function(){
+      successText.textContent = role === 'helper'
+        ? "We'll email " + value + " when CareNova opens to helpers."
+        : "We'll email " + value + " as soon as CareNova is ready for families.";
+      form.hidden = true;
+      success.classList.add('show');
+      success.focus();
+    });
+  });
+
+  document.getElementById('join-again').addEventListener('click', function(){
+    form.reset(); form.hidden = false; success.classList.remove('show');
+    msg.textContent = ''; email.removeAttribute('aria-invalid'); email.focus();
+  });
+})();
+</script>
+</body>
+</html>
