@@ -7,7 +7,7 @@ We built it for our Software Development Group Project (Group CS78) at IIT, in p
 ## What's in the folder
 
 ```
-carenova-site/
+care-nova-landing-page/
 ├── index.html    # the whole website
 └── README.md     # this file
 ```
