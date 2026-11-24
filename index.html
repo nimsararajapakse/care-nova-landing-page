@@ -1378,16 +1378,23 @@ main{padding-top:0}
   var successText = document.getElementById('success-text');
   var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  function submitWaitlist(data){
-    // TODO: replace with a real request, e.g.
-    // return fetch('/api/waitlist', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
-    try {
-      var list = JSON.parse(localStorage.getItem('carenova-waitlist') || '[]');
-      list.push(data);
-      localStorage.setItem('carenova-waitlist', JSON.stringify(list));
-    } catch (e) { /* storage not available, ignore */ }
-    return Promise.resolve();
-  }
+  var ACCESS_KEY = 'a5bc6a29-fe96-4224-a6b1-3351858695be';
+function submitWaitlist(data){
+    return fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'Accept':'application/json'},
+      body: JSON.stringify({
+        access_key: ACCESS_KEY,
+        subject: 'New CareNova waitlist signup',
+        from_name: 'CareNova landing page',
+        email: data.email,
+        role: data.role === 'helper' ? 'Care helper' : 'Family member',
+        signed_up_at: data.at
+      })
+    }).then(function(r){
+      if (!r.ok) { throw new Error('Request failed'); }
+    });
+}
 
   email.addEventListener('input', function(){
     if (email.getAttribute('aria-invalid') === 'true' && pattern.test(email.value.trim())){
@@ -1416,7 +1423,11 @@ main{padding-top:0}
       form.hidden = true;
       success.classList.add('show');
       success.focus();
+        }).catch(function(){
+      msg.textContent = 'Something went wrong. Please try again or email contact@carenova.lk.';
+      msg.className = 'form-msg error';
     });
+     
   });
 
   document.getElementById('join-again').addEventListener('click', function(){
